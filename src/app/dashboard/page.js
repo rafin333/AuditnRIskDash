@@ -1,31 +1,12 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import DataTable from '@/components/ui/DataTable';
 import { AlertTriangle, CheckCircle, Clock, LogOut } from 'lucide-react';
 import Button from '@/components/ui/Button';
 
-// Sample data
-const auditData = [
-  {
-    id: 1,
-    eventType: 'User Login',
-    user: 'john.doe@example.com',
-    timestamp: '2024-02-12 10:30:00',
-    status: 'Completed',
-    riskLevel: 'Low',
-  },
-  {
-    id: 2,
-    eventType: 'File Access',
-    user: 'jane.smith@example.com',
-    timestamp: '2024-02-12 11:15:00',
-    status: 'Pending',
-    riskLevel: 'Medium',
-  },
-];
-
+// Define columns for the table
 const columns = [
   { key: 'eventType', label: 'Event Type' },
   { key: 'user', label: 'User' },
@@ -68,7 +49,39 @@ const columns = [
 
 export default function Dashboard() {
   const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const [auditData, setAuditData] = useState([]);
   
+  // Define your token here
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2IxNmVhZTczMzQ1NzI4MGFmNWQ5MTUiLCJlbWFpbCI6InJhaXlhbjEyNEBnbWFpbC5jb20iLCJyb2xlIjoibG9nZ2VyIiwiYWNsIjpbImxvZ2dpbmciXSwiaWF0IjoxNzM5NzY4MzM2LCJleHAiOjE3Mzk4NTQ3MzZ9.KrGp6Dr34HPnYt681shYgMaoPG5sGH-yU4oLlT1X5Oo';
+
+  // Fetch audit logs data from the API
+  useEffect(() => {
+    setLoading(true);
+    fetch('http://192.168.11.222:5000/api/issue', {
+      headers: {
+        'Authorization': `Bearer ${token}`  // Add the token to the Authorization header
+      }
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        const formattedData = data.map((issue) => ({
+          id: issue._id,
+          eventType: issue.issue_title, // map field name to event type
+          user: issue.userId,           // assuming userId is available or mapping needed
+          timestamp: issue.date,
+          status: issue.issue_status,   // map field name to status
+          riskLevel: issue.issue_priority, // map field name to risk level
+        }));
+        setAuditData(formattedData);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error('Error fetching audit data:', error);
+        setLoading(false);
+      });
+  }, [token]);
+
   const handleLogout = () => {
     // Clear authentication data
     localStorage.removeItem('token');
@@ -85,7 +98,6 @@ export default function Dashboard() {
   // Dashboard layout configuration including logout
   const dashboardConfig = {
     menuItems: [
-      // ... your existing menu items ...
       {
         name: 'Logout',
         href: '/dashboard/settings',
@@ -181,14 +193,18 @@ export default function Dashboard() {
         {/* Audit Logs Table */}
         <div className="bg-white shadow rounded-lg p-6">
           <h2 className="text-lg font-medium text-gray-900 mb-4">Recent Audit Logs</h2>
-          <DataTable
-            columns={columns}
-            data={auditData}
-            onRowClick={handleRowClick}
-            searchable
-            pagination
-            itemsPerPage={10}
-          />
+          {loading ? (
+            <div>Loading...</div>
+          ) : (
+            <DataTable
+              columns={columns}
+              data={auditData}
+              onRowClick={handleRowClick}
+              searchable
+              pagination
+              itemsPerPage={10}
+            />
+          )}
         </div>
       </div>
     </DashboardLayout>

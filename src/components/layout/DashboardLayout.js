@@ -128,7 +128,7 @@ export default function DashboardLayout({ children }) {
             </div>
             <div className="ml-4 flex items-center md:ml-6">
               {/* Profile dropdown */}
-              <div className="relative">
+              {/* <div className="relative">
                 <button 
                   className="flex items-center text-sm"
                   onClick={handleLogout}
@@ -136,7 +136,7 @@ export default function DashboardLayout({ children }) {
                   <span className="mr-2">John Doe</span>
                   <ChevronDown className="h-4 w-4" />
                 </button>
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

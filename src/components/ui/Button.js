@@ -5,15 +5,15 @@ const Button = ({
   variant = 'default', 
   size = 'default', 
   className = '', 
-  as = 'button', // New prop to determine the element type
+  as = 'button',
   ...props 
 }) => {
   const baseStyles = 'inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50';
   
   const variants = {
-    default: 'bg-blue-600 text-white hover:bg-blue-700',
-    outline: 'border border-gray-300 bg-white text-gray-700 hover:bg-gray-50',
-    ghost: 'text-gray-700 hover:bg-gray-100',
+    default: 'bg-black text-white hover:bg-gray-900',
+    outline: 'border border-gray-300 bg-white text-black hover:bg-gray-50',
+    ghost: 'text-black hover:bg-gray-100',
   };
 
   const sizes = {
@@ -22,7 +22,7 @@ const Button = ({
     lg: 'h-12 px-6 text-base',
   };
 
-  const Component = as; // Dynamically set the element type (`button` or `a`)
+  const Component = as;
 
   return (
     <Component
