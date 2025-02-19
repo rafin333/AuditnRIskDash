@@ -11,7 +11,7 @@ import { Select } from "../ui/select";
 import { DialogHeader, DialogTitle } from "../ui/dialog";
 import { Alert, AlertDescription } from "../ui/alert";
 
-const API_URL = "http://192.168.11.222:5000/api";
+const API_URL = "http://192.168.11.248:5000/api";
 const AUTH_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2IxNmVhZTczMzQ1NzI4MGFmNWQ5MTUiLCJlbWFpbCI6InJhaXlhbjEyNEBnbWFpbC5jb20iLCJyb2xlIjoibG9nZ2VyIiwiYWNsIjpbImxvZ2dpbmciXSwiaWF0IjoxNzM5NjgxNTQxLCJleHAiOjE3Mzk3Njc5NDF9.laK8owQFWrucnLSkgxkLZTR2R6JdfT7kkJDY_8u_SC4";
 
 const categories = ["Bug", "Feature Request", "Enhancement"];

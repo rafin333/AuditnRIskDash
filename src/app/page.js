@@ -31,7 +31,7 @@ function Navigation() {
       <div className="flex justify-between items-center">
         <Link href="/" className="text-2xl font-bold text-gray-800 flex items-center">
           <BarChart2 className="mr-2 h-6 w-6 text-indigo-600" />
-          AuditTrack Pro
+          
         </Link>
         <div className="space-x-4">
           <Link href="/login" legacyBehavior>

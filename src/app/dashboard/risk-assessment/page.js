@@ -35,7 +35,7 @@ const RiskManagement = () => {
         risk_status: ''
     });
 
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2FjNjExMjgyMTlhODA0YzhjODBhMjgiLCJlbWFpbCI6InJhaXlhbjEyQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImFjbCI6WyJ0b2RvIiwibm90ZXMiXSwiaWF0IjoxNzM5Nzc1OTQ0LCJleHAiOjE3Mzk4NjIzNDR9.prxa1RMCz_GjztpvnvdfyrwbwsuFM0RGfWilAH7WNHs";
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2IzMDUxMzk1YmRmODI0Y2ZkODBmYzEiLCJlbWFpbCI6InJhaXlhbjE4eEBnbWFpbC5jb20iLCJyb2xlIjoib3duZXIiLCJhY2wiOlsicmlzaywgbWl0aWdhdGlvbiwgcmVwb3J0Il0sImlhdCI6MTczOTk0MjI0OCwiZXhwIjoxNzQwMDI4NjQ4fQ.HqsTefvUEEvywtv4XA83dtFWy_ttqftoKhh_8MoT2SU";
 
     useEffect(() => {
         fetchIssues();
@@ -44,7 +44,7 @@ const RiskManagement = () => {
 
     const fetchIssues = async () => {
         try {
-            const response = await fetch('http://192.168.11.222:5000/api/issue', {
+            const response = await fetch('http://192.168.11.248:5000/api/issue', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -63,7 +63,7 @@ const RiskManagement = () => {
 
     const fetchOwners = async () => {
         try {
-            const response = await fetch('http://192.168.11.222:5000/api/owner', {
+            const response = await fetch('http://192.168.11.248:5000/api/owner', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -83,7 +83,7 @@ const RiskManagement = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://192.168.11.222:5000/api/risk', {
+            const response = await fetch('http://192.168.11.248:5000/api/risk', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -123,7 +123,7 @@ const RiskManagement = () => {
 
     const fetchRisks = async () => {
         try {
-            const response = await fetch('http://192.168.11.222:5000/api/risk', {
+            const response = await fetch('http://192.168.11.248:5000/api/risk', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -270,12 +270,12 @@ const RiskManagement = () => {
                             {risks.map((risk) => (
                                 <TableRow key={risk._id}>
 
-                                    <TableCell>{risk.issue_id}</TableCell>
+                                    <TableCell>{risk.issue_details.issue_title}</TableCell>
                                     <TableCell>{risk.risk_code}</TableCell>
                                     <TableCell>{risk.risk_type}</TableCell>
                                     <TableCell>{risk.probability}</TableCell>
                                     <TableCell>{risk.impact}</TableCell>
-                                    <TableCell>{risk.risk_owner}</TableCell>
+                                    <TableCell>{risk.owner_details.naam}</TableCell>
                                     <TableCell>{risk.risk_status}</TableCell>
                                     <TableCell>{new Date(risk.date).toLocaleDateString()}</TableCell>
                                 </TableRow>

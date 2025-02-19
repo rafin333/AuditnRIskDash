@@ -43,7 +43,7 @@ const AuditLogs = () => {
     issue_attachments: ''
   });
 
-  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2IxNmVhZTczMzQ1NzI4MGFmNWQ5MTUiLCJlbWFpbCI6InJhaXlhbjEyNEBnbWFpbC5jb20iLCJyb2xlIjoibG9nZ2VyIiwiYWNsIjpbImxvZ2dpbmciXSwiaWF0IjoxNzM5NzY4MzM2LCJleHAiOjE3Mzk4NTQ3MzZ9.KrGp6Dr34HPnYt681shYgMaoPG5sGH-yU4oLlT1X5Oo";
+  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2IzMDUxMzk1YmRmODI0Y2ZkODBmYzEiLCJlbWFpbCI6InJhaXlhbjE4eEBnbWFpbC5jb20iLCJyb2xlIjoib3duZXIiLCJhY2wiOlsicmlzaywgbWl0aWdhdGlvbiwgcmVwb3J0Il0sImlhdCI6MTczOTk0MjI0OCwiZXhwIjoxNzQwMDI4NjQ4fQ.HqsTefvUEEvywtv4XA83dtFWy_ttqftoKhh_8MoT2SU";
 
   useEffect(() => {
     fetchIssues();
@@ -51,7 +51,7 @@ const AuditLogs = () => {
 
   const fetchIssues = async () => {
     try {
-      const response = await fetch('http://192.168.11.222:5000/api/issue', {
+      const response = await fetch('http://192.168.11.248:5000/api/issue', {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -71,7 +71,7 @@ const AuditLogs = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://192.168.11.222:5000/api/issue', {
+      const response = await fetch('http://192.168.11.248:5000/api/issue', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

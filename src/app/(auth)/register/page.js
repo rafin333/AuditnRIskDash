@@ -8,7 +8,7 @@ import Input from '@/components/ui/Input';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
 
-const BASE_URL = 'http://192.168.11.222:5000/api';
+const BASE_URL = 'http://192.168.11.248:5000/api';
 
 export default function Register() {
   const router = useRouter();

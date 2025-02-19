@@ -6,13 +6,12 @@ import DataTable from '@/components/ui/DataTable';
 import { AlertTriangle, CheckCircle, Clock, LogOut } from 'lucide-react';
 import Button from '@/components/ui/Button';
 
-// Define columns for the table
 const columns = [
   { key: 'eventType', label: 'Event Type' },
   { key: 'user', label: 'User' },
   { key: 'timestamp', label: 'Timestamp' },
-  { 
-    key: 'status', 
+  {
+    key: 'status',
     label: 'Status',
     render: (value) => {
       const statusConfig = {
@@ -29,8 +28,8 @@ const columns = [
       );
     }
   },
-  { 
-    key: 'riskLevel', 
+  {
+    key: 'riskLevel',
     label: 'Risk Level',
     render: (value) => {
       const colorMap = {
@@ -51,27 +50,27 @@ export default function Dashboard() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [auditData, setAuditData] = useState([]);
-  
-  // Define your token here
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2IxNmVhZTczMzQ1NzI4MGFmNWQ5MTUiLCJlbWFpbCI6InJhaXlhbjEyNEBnbWFpbC5jb20iLCJyb2xlIjoibG9nZ2VyIiwiYWNsIjpbImxvZ2dpbmciXSwiaWF0IjoxNzM5NzY4MzM2LCJleHAiOjE3Mzk4NTQ3MzZ9.KrGp6Dr34HPnYt681shYgMaoPG5sGH-yU4oLlT1X5Oo';
 
-  // Fetch audit logs data from the API
+
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2IzMDUxMzk1YmRmODI0Y2ZkODBmYzEiLCJlbWFpbCI6InJhaXlhbjE4eEBnbWFpbC5jb20iLCJyb2xlIjoib3duZXIiLCJhY2wiOlsicmlzaywgbWl0aWdhdGlvbiwgcmVwb3J0Il0sImlhdCI6MTczOTk0MjI0OCwiZXhwIjoxNzQwMDI4NjQ4fQ.HqsTefvUEEvywtv4XA83dtFWy_ttqftoKhh_8MoT2SU';
+
+
   useEffect(() => {
     setLoading(true);
-    fetch('http://192.168.11.222:5000/api/issue', {
+    fetch('http://192.168.11.248:5000/api/issue', {
       headers: {
-        'Authorization': `Bearer ${token}`  // Add the token to the Authorization header
+        'Authorization': `Bearer ${token}`
       }
     })
       .then((response) => response.json())
       .then((data) => {
         const formattedData = data.map((issue) => ({
           id: issue._id,
-          eventType: issue.issue_title, // map field name to event type
-          user: issue.userId,           // assuming userId is available or mapping needed
+          eventType: issue.issue_title,
+          user: issue.userId,
           timestamp: issue.date,
-          status: issue.issue_status,   // map field name to status
-          riskLevel: issue.issue_priority, // map field name to risk level
+          status: issue.issue_status,
+          riskLevel: issue.issue_priority,
         }));
         setAuditData(formattedData);
         setLoading(false);
@@ -83,11 +82,9 @@ export default function Dashboard() {
   }, [token]);
 
   const handleLogout = () => {
-    // Clear authentication data
     localStorage.removeItem('token');
     localStorage.removeItem('user');
-    
-    // Navigate to landing page using Next.js router
+
     router.push('/');
   };
 
@@ -95,7 +92,6 @@ export default function Dashboard() {
     console.log('Row clicked:', row);
   };
 
-  // Dashboard layout configuration including logout
   const dashboardConfig = {
     menuItems: [
       {
@@ -112,7 +108,7 @@ export default function Dashboard() {
 
   return (
     <DashboardLayout config={dashboardConfig}>
-      <div className="space-y-6">
+      <div className="space-y-6 max-w-7xl mx-auto px-6">
         <div className="sm:flex sm:items-center sm:justify-between">
           <div>
             <h1 className="text-2xl font-semibold text-gray-900">Audit Dashboard</h1>
@@ -127,7 +123,6 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Stats Overview */}
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           <div className="bg-white overflow-hidden shadow rounded-lg">
             <div className="p-5">
@@ -148,7 +143,7 @@ export default function Dashboard() {
               </div>
             </div>
           </div>
-          
+
           <div className="bg-white overflow-hidden shadow rounded-lg">
             <div className="p-5">
               <div className="flex items-center">
@@ -168,7 +163,7 @@ export default function Dashboard() {
               </div>
             </div>
           </div>
-          
+
           <div className="bg-white overflow-hidden shadow rounded-lg">
             <div className="p-5">
               <div className="flex items-center">
@@ -190,7 +185,6 @@ export default function Dashboard() {
           </div>
         </div>
 
-        {/* Audit Logs Table */}
         <div className="bg-white shadow rounded-lg p-6">
           <h2 className="text-lg font-medium text-gray-900 mb-4">Recent Audit Logs</h2>
           {loading ? (
