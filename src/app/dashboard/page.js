@@ -5,6 +5,7 @@ import DashboardLayout from '@/components/layout/DashboardLayout';
 import DataTable from '@/components/ui/DataTable';
 import { AlertTriangle, CheckCircle, Clock, LogOut } from 'lucide-react';
 import Button from '@/components/ui/Button';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
 
 const columns = [
   { key: 'eventType', label: 'Event Type' },
@@ -28,22 +29,21 @@ const columns = [
       );
     }
   },
-  {
-    key: 'riskLevel',
-    label: 'Risk Level',
-    render: (value) => {
-      const colorMap = {
-        Low: 'bg-green-100 text-green-800',
-        Medium: 'bg-yellow-100 text-yellow-800',
-        High: 'bg-red-100 text-red-800',
-      };
-      return (
-        <span className={`inline-flex items-center rounded-full px-2.5 py-0.5 text-xs font-medium ${colorMap[value]}`}>
-          {value}
-        </span>
-      );
-    }
-  },
+];
+
+const riskData = [
+  // { name: 'Low Risk', value: 10, color: '#34D399' },
+  // { name: 'Medium Risk', value: 7, color: '#FACC15' },
+  // { name: 'High Risk', value: 3, color: '#EF4444' },
+  { name: 'Low Risk', value: 10, color: '#10B981' },
+  { name: 'Medium Risk', value: 6, color: '#FACC15' },
+  { name: 'High Risk', value: 4, color: '#EF4444' },
+];
+
+const mitigationData = [
+  { name: 'Pending', count: 5, color: '#F59E0B' },
+  { name: 'In Progress', count: 8, color: '#F59E0B' },
+  { name: 'Completed', count: 12, color: '#F59E0B' },
 ];
 
 export default function Dashboard() {
@@ -51,17 +51,17 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [auditData, setAuditData] = useState([]);
 
-
   const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2FjNjExMjgyMTlhODA0YzhjODBhMjgiLCJlbWFpbCI6InJhaXlhbjEyQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImFjbCI6WyJ0b2RvIiwibm90ZXMiXSwiaWF0IjoxNzQwODkzOTY3LCJleHAiOjE3NDA5ODAzNjd9.R5sM5hMrcLfLgLdvBEb5nU_r2fShdisRTuh3YCTMD-U';
 
 
   useEffect(() => {
     setLoading(true);
-    fetch('http://202.4.109.211:5050/api/issue', {
-      headers: {
-        'Authorization': `Bearer ${token}`
-      }
-    })
+    fetch('http://202.4.109.211:5050/api/issue'
+      , {
+        headers: {
+          'Authorization': `Bearer ${token}`
+        }
+      })
       .then((response) => response.json())
       .then((data) => {
         const formattedData = data.map((issue) => ({
@@ -79,12 +79,10 @@ export default function Dashboard() {
         console.error('Error fetching audit data:', error);
         setLoading(false);
       });
-  }, [token]);
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
-    localStorage.removeItem('user');
-
     router.push('/');
   };
 
@@ -107,20 +105,11 @@ export default function Dashboard() {
   };
 
   return (
-    <DashboardLayout config={dashboardConfig}>
+    <DashboardLayout>
       <div className="space-y-6 max-w-7xl mx-auto px-6">
         <div className="sm:flex sm:items-center sm:justify-between">
-          <div>
-            <h1 className="text-2xl font-semibold text-gray-900">Audit Dashboard</h1>
-            <p className="mt-2 text-sm text-gray-700">
-              Monitor and manage your audit logs and risk assessments
-            </p>
-          </div>
-          <div className="mt-4 sm:mt-0">
-            <Button>
-              Export Report
-            </Button>
-          </div>
+          <h1 className="text-2xl font-semibold text-gray-900">Audit Dashboard</h1>
+          <Button>Export Report</Button>
         </div>
 
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -185,20 +174,38 @@ export default function Dashboard() {
           </div>
         </div>
 
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+          <div className="bg-white p-6 shadow rounded-lg">
+            <h2 className="text-lg font-medium mb-4">Risk Levels</h2>
+            <ResponsiveContainer width="100%" height={300}>
+              <PieChart>
+                <Pie data={riskData} cx="50%" cy="50%" outerRadius={80} dataKey="value" label>
+                  {riskData.map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={entry.color} />
+                  ))}
+                </Pie>
+                <Legend />
+                <Tooltip />
+              </PieChart>
+            </ResponsiveContainer>
+          </div>
+
+          <div className="bg-white p-6 shadow rounded-lg">
+            <h2 className="text-lg font-medium mb-4">Mitigation Progress</h2>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={mitigationData}>
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Bar dataKey="count" fill="#60A5FA" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        </div>
+
         <div className="bg-white shadow rounded-lg p-6">
           <h2 className="text-lg font-medium text-gray-900 mb-4">Recent Audit Logs</h2>
-          {loading ? (
-            <div>Loading...</div>
-          ) : (
-            <DataTable
-              columns={columns}
-              data={auditData}
-              onRowClick={handleRowClick}
-              searchable
-              pagination
-              itemsPerPage={10}
-            />
-          )}
+          {loading ? <div>Loading...</div> : <DataTable columns={columns} data={auditData} pagination itemsPerPage={10} />}
         </div>
       </div>
     </DashboardLayout>
