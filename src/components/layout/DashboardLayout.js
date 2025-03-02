@@ -170,7 +170,8 @@ import {
   Search, 
   User, 
   LogOut,
-  Menu
+  Menu,
+  AlertCircle
 } from 'lucide-react'
 
 import Input from '../ui/Input'
@@ -197,7 +198,8 @@ const navigation = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
   { name: 'Audit Logs', href: '/dashboard/audit-logs', icon: FileText },
   { name: 'Risk Assessment', href: '/dashboard/risk-assessment', icon: AlertTriangle },
-  { name: 'Settings', href: '/dashboard/settings', icon: Settings },
+  { name: 'Mitigations Plan', href: '/dashboard/mitigations-plan', icon: AlertCircle },
+  // { name: 'Settings', href: '/dashboard/settings', icon: Settings },
 ]
 
 export default function DashboardLayout({ children }) {

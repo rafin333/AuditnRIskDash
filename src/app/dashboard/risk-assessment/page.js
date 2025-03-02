@@ -27,8 +27,10 @@ const RiskManagement = () => {
     const [issues, setIssues] = useState([]);
     const [owners, setOwners] = useState([]);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
     const [selectedRiskId, setSelectedRiskId] = useState(null);
+    const [selectedIssueId, setSelectedIssueId] = useState(null);
     const [newRisk, setNewRisk] = useState({
         issue_id: '',
         risk_code: '',
@@ -39,7 +41,7 @@ const RiskManagement = () => {
         risk_status: ''
     });
 
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2IzMDUxMzk1YmRmODI0Y2ZkODBmYzEiLCJlbWFpbCI6InJhaXlhbjE4eEBnbWFpbC5jb20iLCJyb2xlIjoib3duZXIiLCJhY2wiOlsicmlzaywgbWl0aWdhdGlvbiwgcmVwb3J0Il0sImlhdCI6MTczOTk0MjI0OCwiZXhwIjoxNzQwMDI4NjQ4fQ.HqsTefvUEEvywtv4XA83dtFWy_ttqftoKhh_8MoT2SU";
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2FjNjExMjgyMTlhODA0YzhjODBhMjgiLCJlbWFpbCI6InJhaXlhbjEyQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImFjbCI6WyJ0b2RvIiwibm90ZXMiXSwiaWF0IjoxNzQwODkzOTY3LCJleHAiOjE3NDA5ODAzNjd9.R5sM5hMrcLfLgLdvBEb5nU_r2fShdisRTuh3YCTMD-U";
 
     useEffect(() => {
         fetchIssues();
@@ -48,7 +50,7 @@ const RiskManagement = () => {
 
     const fetchIssues = async () => {
         try {
-            const response = await fetch('http://192.168.11.248:5000/api/issue', {
+            const response = await fetch('http://202.4.109.211:5050/api/issue', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -67,7 +69,7 @@ const RiskManagement = () => {
 
     const fetchOwners = async () => {
         try {
-            const response = await fetch('http://192.168.11.248:5000/api/owner', {
+            const response = await fetch('http://202.4.109.211:5050/api/owner', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -87,8 +89,13 @@ const RiskManagement = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const response = await fetch('http://192.168.11.248:5000/api/risk', {
-                method: 'POST',
+            const method = isEditing ? "PUT" : "POST";
+            const url = isEditing
+                ? `http://202.4.109.211:5050/api/risk/${selectedRiskId}`
+                : "http://202.4.109.211:5050/api/risk";
+
+            const response = await fetch(url, {
+                method,
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`
@@ -97,7 +104,9 @@ const RiskManagement = () => {
             });
 
             if (response.ok) {
+                fetchRisks();
                 setIsDialogOpen(false);
+                setIsEditing(false);
                 setNewRisk({
                     issue_id: '',
                     risk_code: '',
@@ -107,10 +116,11 @@ const RiskManagement = () => {
                     risk_owner: '',
                     risk_status: ''
                 });
+                resetForm();
 
             }
         } catch (error) {
-            console.error('Error creating risk:', error);
+            console.error(`Error ${isEditing ? "updating" : "creating"} risk:`, error);
         }
     };
 
@@ -127,7 +137,7 @@ const RiskManagement = () => {
 
     const fetchRisks = async () => {
         try {
-            const response = await fetch('http://192.168.11.248:5000/api/risk', {
+            const response = await fetch('http://202.4.109.211:5050/api/risk', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -144,6 +154,21 @@ const RiskManagement = () => {
         }
     };
 
+    const handleEdit = (risk) => {
+        setIsEditing(true);
+        setSelectedRiskId(risk._id);
+        setNewRisk({
+            issue_id: risk.issue_id,
+            risk_code: risk.risk_code,
+            risk_type: risk.risk_type,
+            probability: risk.probability,
+            impact: risk.impact,
+            risk_owner: risk.risk_owner,
+            risk_status: risk.risk_status,
+        });
+        setIsDialogOpen(true);
+    };
+
     const handleDeleteClick = (id) => {
         setSelectedRiskId(id);
         setIsDeleteDialogOpen(true);
@@ -151,7 +176,7 @@ const RiskManagement = () => {
 
     const handleDeleteConfirm = async () => {
         try {
-            const response = await fetch(`http://192.168.11.248:5000/api/risk/${selectedRiskId}`, {
+            const response = await fetch(`http://202.4.109.211:5050/api/risk/${selectedRiskId}`, {
                 method: 'DELETE',
                 headers: { 'Authorization': `Bearer ${token}` }
             });
@@ -160,10 +185,23 @@ const RiskManagement = () => {
                 fetchRisks();
                 setIsDeleteDialogOpen(false);
                 setSelectedRiskId(null);
+                setIsEditing(false);
             }
         } catch (error) {
             console.error('Error deleting issue:', error);
         }
+    };
+
+    const resetForm = () => {
+        setNewRisk({
+            issue_id: '',
+            risk_code: '',
+            risk_type: '',
+            probability: '',
+            impact: '',
+            risk_owner: '',
+            risk_status: ''
+        });
     };
 
     return (
@@ -171,11 +209,12 @@ const RiskManagement = () => {
             <div className="p-8">
                 <div className="flex justify-between items-center mb-6">
                     <h1 className="text-2xl font-bold">Risk Management</h1>
-                    <Button onClick={() => setIsDialogOpen(true)}>Add Risk</Button>
+                    {/* <Button onClick={() => setIsDialogOpen(true)}>Add Risk</Button> */}
+                    <Button onClick={() => { setIsDialogOpen(true); resetForm(); }}>Add Risk</Button>
                     <Dialog open={isDialogOpen} onOpenChange={setIsDialogOpen}>
                         <DialogContent className="sm:max-w-[425px]">
                             <DialogHeader>
-                                <DialogTitle>Create New Risk</DialogTitle>
+                                <DialogTitle>{isEditing ? "Edit RIsk" : "Create New Risk"}</DialogTitle>
                             </DialogHeader>
                             <form onSubmit={handleSubmit} className="space-y-4">
                                 <div>
@@ -262,7 +301,7 @@ const RiskManagement = () => {
                                 </div>
 
                                 <div className="flex gap-4">
-                                    <Button type="submit" className="flex-1">Create Risk</Button>
+                                <Button type="submit" className="flex-1">{isEditing ? "Update Risk" : "Create Risk"}</Button>
                                     <button
                                         onClick={() => setIsDialogOpen(false)}
                                         className="px-4 py-2 bg-red-500 text-white rounded h-10 text-sm"
@@ -338,12 +377,12 @@ const RiskManagement = () => {
                             {risks.map((risk) => (
                                 <TableRow key={risk._id}>
 
-                                    <TableCell>{risk.issue_title}</TableCell>
+                                    <TableCell>{risk.issue_details?.issue_title}</TableCell>
                                     <TableCell>{risk.risk_code}</TableCell>
                                     <TableCell>{risk.risk_type}</TableCell>
                                     <TableCell>{risk.probability}</TableCell>
                                     <TableCell>{risk.impact}</TableCell>
-                                    <TableCell>{risk.naam}</TableCell>
+                                    <TableCell>{risk.owner_details?.naam}</TableCell>
                                     <TableCell>{risk.risk_status}</TableCell>
                                     <TableCell>{new Date(risk.date).toLocaleDateString()}</TableCell>
                                     <TableCell>

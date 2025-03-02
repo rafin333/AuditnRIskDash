@@ -52,7 +52,7 @@
 
 //   const fetchIssues = async () => {
 //     try {
-//       const response = await fetch('http://192.168.11.248:5000/api/issue', {
+//       const response = await fetch('http://202.4.109.211:5050/api/issue', {
 //         headers: {
 //           'Authorization': `Bearer ${token}`
 //         }
@@ -72,7 +72,7 @@
 //   const handleSubmit = async (e) => {
 //     e.preventDefault();
 //     try {
-//       const response = await fetch('http://192.168.11.248:5000/api/issue', {
+//       const response = await fetch('http://202.4.109.211:5050/api/issue', {
 //         method: 'POST',
 //         headers: {
 //           'Content-Type': 'application/json',
@@ -328,7 +328,7 @@ const AuditLogs = () => {
     issue_attachments: ''
   });
 
-  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2IzMDUxMzk1YmRmODI0Y2ZkODBmYzEiLCJlbWFpbCI6InJhaXlhbjE4eEBnbWFpbC5jb20iLCJyb2xlIjoib3duZXIiLCJhY2wiOlsicmlzaywgbWl0aWdhdGlvbiwgcmVwb3J0Il0sImlhdCI6MTczOTk0MjI0OCwiZXhwIjoxNzQwMDI4NjQ4fQ.HqsTefvUEEvywtv4XA83dtFWy_ttqftoKhh_8MoT2SU";
+  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2FjNjExMjgyMTlhODA0YzhjODBhMjgiLCJlbWFpbCI6InJhaXlhbjEyQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImFjbCI6WyJ0b2RvIiwibm90ZXMiXSwiaWF0IjoxNzQwODkzOTY3LCJleHAiOjE3NDA5ODAzNjd9.R5sM5hMrcLfLgLdvBEb5nU_r2fShdisRTuh3YCTMD-U";
 
   useEffect(() => {
     fetchIssues();
@@ -336,7 +336,7 @@ const AuditLogs = () => {
 
   const fetchIssues = async () => {
     try {
-      const response = await fetch('http://192.168.11.248:5000/api/issue', {
+      const response = await fetch('http://202.4.109.211:5050/api/issue', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await response.json();
@@ -357,8 +357,8 @@ const AuditLogs = () => {
     try {
       const method = isEditing ? "PUT" : "POST";
       const url = isEditing
-        ? `http://192.168.11.248:5000/api/issue/${selectedIssueId}`
-        : "http://192.168.11.248:5000/api/issue";
+        ? `http://202.4.109.211:5050/api/issue/${selectedIssueId}`
+        : "http://202.4.109.211:5050/api/issue";
 
       const response = await fetch(url, {
         method,
@@ -394,7 +394,7 @@ const AuditLogs = () => {
 
   const handleDeleteConfirm = async () => {
     try {
-      const response = await fetch(`http://192.168.11.248:5000/api/issue/${selectedIssueId}`, {
+      const response = await fetch(`http://202.4.109.211:5050/api/issue/${selectedIssueId}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -451,6 +451,7 @@ const AuditLogs = () => {
                 <option value="Resolved">Resolved</option>
                 <option value="Closed">Closed</option>
               </select>
+              <Input name="issue_attachment" placeholder="Issue Attachment" value={newIssue.issue_attachments} onChange={handleInputChange} />
               <div className="flex gap-4">
                 <Button type="submit" className="flex-1">{isEditing ? "Update Issue" : "Create Issue"}</Button>
                 <button onClick={() => setIsDialogOpen(false)} className="px-4 py-2 bg-red-500 text-white rounded h-10 text-sm">Close</button>
@@ -470,7 +471,7 @@ const AuditLogs = () => {
             </DialogBody>
 
             <DialogFooter className="flex justify-end gap-4">
-              
+
               <Button
                 onClick={() => setIsDeleteDialogOpen(false)}
                 style={{
@@ -512,6 +513,7 @@ const AuditLogs = () => {
                 <TableHead>Priority</TableHead>
                 <TableHead>Status</TableHead>
                 <TableHead>Date</TableHead>
+                <TableHead>Attachment</TableHead>
                 <TableHead>Actions</TableHead>
               </TableRow>
             </TableHeader>
@@ -525,6 +527,7 @@ const AuditLogs = () => {
                   <TableCell>{issue.issue_priority}</TableCell>
                   <TableCell>{issue.issue_status}</TableCell>
                   <TableCell>{new Date(issue.date).toLocaleDateString()}</TableCell>
+                  <TableCell>{issue.issue_attachments}</TableCell>
                   <TableCell>
                     <div className="flex gap-2">
                       <button onClick={() => handleEdit(issue)}><PencilSquareIcon className="h-5 w-5 text-gray-600" /></button>

@@ -22,7 +22,7 @@ const AddIssueDialog = ({ onIssueAdded }) => {
     setLoading(true);
 
     try {
-      const response = await fetch('http://192.168.11.248:5000/api/issue', {
+      const response = await fetch('http://202.4.109.211:5050/api/issue', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
