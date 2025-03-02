@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/table';
 import {
     Dialog,
+    DialogBody,
     DialogContent,
     DialogFooter,
     DialogHeader,
@@ -20,11 +21,14 @@ import Button from '@/components/ui/Button';
 import Input from '@/components/ui/Input';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import Textarea from '@/components/ui/textarea';
+import { PencilSquareIcon, TrashIcon } from '@heroicons/react/24/solid';
 
 const RiskManagement = () => {
     const [issues, setIssues] = useState([]);
     const [owners, setOwners] = useState([]);
     const [isDialogOpen, setIsDialogOpen] = useState(false);
+    const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+    const [selectedRiskId, setSelectedRiskId] = useState(null);
     const [newRisk, setNewRisk] = useState({
         issue_id: '',
         risk_code: '',
@@ -140,6 +144,28 @@ const RiskManagement = () => {
         }
     };
 
+    const handleDeleteClick = (id) => {
+        setSelectedRiskId(id);
+        setIsDeleteDialogOpen(true);
+    };
+
+    const handleDeleteConfirm = async () => {
+        try {
+            const response = await fetch(`http://192.168.11.248:5000/api/risk/${selectedRiskId}`, {
+                method: 'DELETE',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+
+            if (response.ok) {
+                fetchRisks();
+                setIsDeleteDialogOpen(false);
+                setSelectedRiskId(null);
+            }
+        } catch (error) {
+            console.error('Error deleting issue:', error);
+        }
+    };
+
     return (
         <DashboardLayout>
             <div className="p-8">
@@ -251,6 +277,47 @@ const RiskManagement = () => {
                     </Dialog>
                 </div>
 
+                <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+                    <DialogContent className="sm:max-w-[400px]">
+                        <DialogHeader>
+                            <DialogTitle>Confirm Delete</DialogTitle>
+                        </DialogHeader>
+
+                        <DialogBody>
+                            <p>Are you sure you want to delete this risk? This action cannot be undone.</p>
+                        </DialogBody>
+
+                        <DialogFooter className="flex justify-end gap-4">
+
+                            <Button
+                                onClick={() => setIsDeleteDialogOpen(false)}
+                                style={{
+                                    backgroundColor: '#f3f4f6',
+                                    color: 'black',
+                                    transition: 'background-color 0.3s ease'
+                                }}
+                                onMouseEnter={(e) => e.target.style.backgroundColor = '#48bb78'}
+                                onMouseLeave={(e) => e.target.style.backgroundColor = '#f3f4f6'}
+                            >
+                                Cancel
+                            </Button>
+                            <Button
+                                onClick={handleDeleteConfirm}
+                                style={{
+                                    backgroundColor: '#f3f4f6',
+                                    color: 'black',
+                                    transition: 'background-color 0.3s ease'
+                                }}
+                                onMouseEnter={(e) => e.target.style.backgroundColor = '#e53e3e'}
+                                onMouseLeave={(e) => e.target.style.backgroundColor = '#f3f4f6'}
+                            >
+                                Delete
+                            </Button>
+
+                        </DialogFooter>
+                    </DialogContent>
+                </Dialog>
+
                 <div className="rounded-md border">
                     <Table>
                         <TableHeader>
@@ -264,20 +331,27 @@ const RiskManagement = () => {
                                 <TableHead>Owner</TableHead>
                                 <TableHead>Status</TableHead>
                                 <TableHead>Date</TableHead>
+                                <TableHead>Actions</TableHead>
                             </TableRow>
                         </TableHeader>
                         <TableBody>
                             {risks.map((risk) => (
                                 <TableRow key={risk._id}>
 
-                                    <TableCell>{risk.issue_details.issue_title}</TableCell>
+                                    <TableCell>{risk.issue_title}</TableCell>
                                     <TableCell>{risk.risk_code}</TableCell>
                                     <TableCell>{risk.risk_type}</TableCell>
                                     <TableCell>{risk.probability}</TableCell>
                                     <TableCell>{risk.impact}</TableCell>
-                                    <TableCell>{risk.owner_details.naam}</TableCell>
+                                    <TableCell>{risk.naam}</TableCell>
                                     <TableCell>{risk.risk_status}</TableCell>
                                     <TableCell>{new Date(risk.date).toLocaleDateString()}</TableCell>
+                                    <TableCell>
+                                        <div className="flex gap-2">
+                                            <button onClick={() => handleEdit(risk)}><PencilSquareIcon className="h-5 w-5 text-gray-600" /></button>
+                                            <button onClick={() => handleDeleteClick(risk._id)}><TrashIcon className="h-5 w-5 text-black" /></button>
+                                        </div>
+                                    </TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>

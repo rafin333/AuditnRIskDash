@@ -36,5 +36,9 @@ export function DialogTitle({ children }) {
 }
 
 export function DialogFooter({ children }) {
-  return <div className="border-b pb-2 mb-2 text-lg font-bold">{children}</div>;
+  return <div className="border-b pb-2 mb-2 text-lg font-bold flex gap-2">{children}</div>;
+}
+
+export function DialogBody({ children }) {
+  return <div className="pt-4 pb-4">{children}</div>;
 }
