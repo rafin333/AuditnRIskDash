@@ -41,7 +41,7 @@ const RiskManagement = () => {
         risk_status: ''
     });
 
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2FjNjExMjgyMTlhODA0YzhjODBhMjgiLCJlbWFpbCI6InJhaXlhbjEyQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImFjbCI6WyJ0b2RvIiwibm90ZXMiXSwiaWF0IjoxNzQwODkzOTY3LCJleHAiOjE3NDA5ODAzNjd9.R5sM5hMrcLfLgLdvBEb5nU_r2fShdisRTuh3YCTMD-U";
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2FjNjExMjgyMTlhODA0YzhjODBhMjgiLCJlbWFpbCI6InJhaXlhbjEyQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImFjbCI6WyJ0b2RvIiwibm90ZXMiXSwiaWF0IjoxNzQwOTkwMzM1LCJleHAiOjE3NDEwNzY3MzV9.qfq8c1LqX67D1yICjTsJOLa26HsMr4y8xyC9KV9BKeM";
 
     useEffect(() => {
         fetchIssues();
