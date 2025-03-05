@@ -193,7 +193,7 @@ export default function DashboardLayout({ children }) {
 
   React.useEffect(() => {
     const fetchUserName = async () => {
-      const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2FjNjExMjgyMTlhODA0YzhjODBhMjgiLCJlbWFpbCI6InJhaXlhbjEyQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImFjbCI6WyJ0b2RvIiwibm90ZXMiXSwiaWF0IjoxNzQwOTkwMzM1LCJleHAiOjE3NDEwNzY3MzV9.qfq8c1LqX67D1yICjTsJOLa26HsMr4y8xyC9KV9BKeM';
+      const token = '';
 
       if (!token) {
         setUserName("Not Authenticated");

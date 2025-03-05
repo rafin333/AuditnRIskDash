@@ -40,7 +40,7 @@ const MitigationPlan = () => {
         userId: ''
     });
 
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2FjNjExMjgyMTlhODA0YzhjODBhMjgiLCJlbWFpbCI6InJhaXlhbjEyQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImFjbCI6WyJ0b2RvIiwibm90ZXMiXSwiaWF0IjoxNzQwOTkwMzM1LCJleHAiOjE3NDEwNzY3MzV9.qfq8c1LqX67D1yICjTsJOLa26HsMr4y8xyC9KV9BKeM";
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M4MDczZGNjYmRlYzA0ODgyNDc3YmEiLCJlbWFpbCI6InJhZmluQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImFjbCI6WyJyaXNrLCBtaXRpZ2F0aW9uLCByZXBvcnQsIGxvZ2dpbmciXSwiaWF0IjoxNzQxMTYyMzczLCJleHAiOjE3NDEyNDg3NzN9.pv6nCTrBskeXbWzdg6rpZpqOjd7YvHGMFJvY-wRxY2g";
 
     useEffect(() => {
         fetchMitigations();
@@ -246,16 +246,6 @@ const MitigationPlan = () => {
                                         required
                                     />
                                 </div>
-                                <div>
-                                    <Input
-                                        name="userId"
-                                        placeholder="UserId"
-                                        value={newMitigation.userId}
-                                        onChange={handleInputChange}
-                                        required
-                                    />
-                                </div>
-                                
 
                                 <div className="flex gap-4">
                                     <Button type="submit" className="flex-1">{isEditing ? "Update Mitigation" : "Create Mitigation"}</Button>
@@ -324,7 +314,6 @@ const MitigationPlan = () => {
                                 <TableHead>timeline</TableHead>
                                 <TableHead>resources</TableHead>
                                 <TableHead>status</TableHead>
-                                <TableHead>user Id</TableHead>
                                 <TableHead>date</TableHead>
                                 <TableHead>actions</TableHead>
 
@@ -339,7 +328,6 @@ const MitigationPlan = () => {
                                     <TableCell>{mitigation.timeline}</TableCell>
                                     <TableCell>{mitigation.resources}</TableCell>
                                     <TableCell>{mitigation.status}</TableCell>
-                                    <TableCell>{mitigation.userId}</TableCell>
                                     <TableCell>{new Date(mitigation.date).toLocaleDateString()}</TableCell>
                                     <TableCell>
                                         <div className="flex gap-2">
