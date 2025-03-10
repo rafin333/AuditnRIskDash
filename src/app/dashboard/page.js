@@ -5,7 +5,8 @@ import DashboardLayout from '@/components/layout/DashboardLayout';
 import DataTable from '@/components/ui/DataTable';
 import { AlertTriangle, CheckCircle, Clock, LogOut } from 'lucide-react';
 import Button from '@/components/ui/Button';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, PieChart, Pie, Cell, Legend } from 'recharts';
+import { BarChart, Bar, PieChart, Pie, Cell, Legend, LineChart, Line } from 'recharts';
+import { XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
 const columns = [
   { key: 'eventType', label: 'Event Type' },
@@ -29,6 +30,27 @@ const columns = [
       );
     }
   },
+];
+
+const monthlyData = [
+  { name: 'Jan', value: 100 },
+  { name: 'Feb', value: 200 },
+  { name: 'Mar', value: 150 },
+  { name: 'Apr', value: 300 },
+  { name: 'May', value: 400 },
+  { name: 'Jun', value: 500 },
+  { name: 'Jul', value: 600 },
+  { name: 'Aug', value: 700 },
+  { name: 'Sep', value: 550 },
+  { name: 'Oct', value: 400 },
+  { name: 'Nov', value: 300 },
+  { name: 'Dec', value: 450 }
+];
+
+const charts = [
+  { title: 'Alerts V/S Transactions', color: 'from-green-500 to-green-700' },
+  { title: 'False Positive', color: 'from-blue-500 to-blue-700' },
+  { title: 'True Positive', color: 'from-pink-500 to-pink-700' },
 ];
 
 const riskData = [
@@ -174,6 +196,35 @@ export default function Dashboard() {
           </div>
         </div>
 
+        <div className="max-w-7xl mx-auto px-6 space-y-8">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {charts.map((chart, index) => (
+              <div
+                key={index}
+                className={`bg-gradient-to-br ${chart.color} p-6 rounded-xl shadow-lg text-white transition-transform transform hover:scale-105`}
+              >
+                <h2 className="text-xl font-semibold mb-4">Monthly {chart.title}</h2>
+                <ResponsiveContainer width="100%" height={220}>
+                  <LineChart data={monthlyData}>
+                    <XAxis dataKey="name" stroke="#ffffff" />
+                    <YAxis stroke="#ffffff" />
+                    <Tooltip
+                      contentStyle={{
+                        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+                        color: '#fff',
+                        borderRadius: '6px',
+                      }}
+                      cursor={{ stroke: 'rgba(255, 255, 255, 0.4)', strokeWidth: 2 }}
+                    />
+                    <Legend wrapperStyle={{ color: '#ffffff' }} />
+                    <Line type="monotone" dataKey="value" stroke="#ffffff" strokeWidth={2} />
+                  </LineChart>
+                </ResponsiveContainer>
+              </div>
+            ))}
+          </div>
+        </div>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
           <div className="bg-white p-6 shadow rounded-lg">
             <h2 className="text-lg font-medium mb-4">Risk Levels</h2>
@@ -185,7 +236,10 @@ export default function Dashboard() {
                   ))}
                 </Pie>
                 <Legend />
-                <Tooltip />
+                <Tooltip
+                  contentStyle={{ backgroundColor: 'rgba(255, 255, 255, 0.7)', color: '#fff', borderRadius: '5px' }}
+                  cursor={{ stroke: 'rgba(255, 255, 255, 0.3)', strokeWidth: 2 }}
+                />
               </PieChart>
             </ResponsiveContainer>
           </div>
@@ -196,7 +250,10 @@ export default function Dashboard() {
               <BarChart data={mitigationData}>
                 <XAxis dataKey="name" />
                 <YAxis />
-                <Tooltip />
+                <Tooltip
+                  contentStyle={{ backgroundColor: 'rgba(0, 0, 0, 0.7)', color: '#fff', borderRadius: '5px' }}
+                  cursor={{ stroke: 'rgba(255, 255, 255, 0.3)', strokeWidth: 2 }}
+                />
                 <Bar dataKey="count" fill="#60A5FA" />
               </BarChart>
             </ResponsiveContainer>
