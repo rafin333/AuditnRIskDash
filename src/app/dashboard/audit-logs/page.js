@@ -28,7 +28,7 @@ const AuditLogs = () => {
     issue_attachments: ''
   });
 
-  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M4MDczZGNjYmRlYzA0ODgyNDc3YmEiLCJlbWFpbCI6InJhZmluQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImFjbCI6WyJyaXNrLCBtaXRpZ2F0aW9uLCByZXBvcnQsIGxvZ2dpbmciXSwiaWF0IjoxNzQxMTYyMzczLCJleHAiOjE3NDEyNDg3NzN9.pv6nCTrBskeXbWzdg6rpZpqOjd7YvHGMFJvY-wRxY2g";
+  const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M4MDczZGNjYmRlYzA0ODgyNDc3YmEiLCJlbWFpbCI6InJhZmluQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImFjbCI6WyJyaXNrLCBtaXRpZ2F0aW9uLCByZXBvcnQsIGxvZ2dpbmciXSwiaWF0IjoxNzQxNTkwMTU5LCJleHAiOjE3NDE2NzY1NTl9.Gd0pMRZ9RS9Xrrz_9SzrzoWyhBXLFmgGD4xgOuVXSLY";
 
   useEffect(() => {
     fetchIssues();
@@ -137,21 +137,55 @@ const AuditLogs = () => {
             <form onSubmit={handleSubmit} className="space-y-4">
               <Input name="issue_title" placeholder="Issue Title" value={newIssue.issue_title} onChange={handleInputChange} />
               <Textarea name="issue_description" placeholder="Issue Description" value={newIssue.issue_description} onChange={handleInputChange} />
-              <Input name="issue_source" placeholder="Issue Source" value={newIssue.issue_source} onChange={handleInputChange} />
-              <Input name="issue_category" placeholder="Issue Category" value={newIssue.issue_category} onChange={handleInputChange} />
+
+              {/* <Input name="issue_source" placeholder="Issue Source" value={newIssue.issue_source} onChange={handleInputChange} /> */}
+              <select
+                name="issue_source"
+                value={newIssue.issue_source}
+                onChange={handleInputChange}
+                required
+                className="w-full p-2 border rounded-md"
+              >
+                <option value="" disabled defaultValue className="text-gray-400">Select Issue Source</option>
+                <option value="Invoices & Receipts">Invoices & Receipts</option>
+                <option value="Management Accounts">Management Accounts</option>
+                <option value="Payroll System">Payroll System</option>
+                <option value="Bank Documents">Bank Documents</option>
+                <option value="Balance Sheets">Balance Sheets</option>
+                <option value="Cash Flow Statements">Cash Flow Statements</option>
+              </select>
+
+              {/* <Input name="issue_category" placeholder="Issue Category" value={newIssue.issue_category} onChange={handleInputChange} /> */}
+              <select
+                name="issue_category"
+                value={newIssue.issue_category}
+                onChange={handleInputChange}
+                required
+                className="w-full p-2 border rounded-md"
+              >
+                <option value="" disabled defaultValue className="text-gray-400">Select Issue Category</option>
+                <option value="Qualified">Qualified</option>
+                <option value="Unqualified">Unqualified</option>
+                <option value="Disclaimer Of Opinion">Disclaimer Of Opinion</option>
+                <option value="Adverse">Adverse</option>
+              </select>
+
               <select name="issue_priority" value={newIssue.issue_priority} onChange={handleInputChange} className="w-full p-2 border rounded-md">
                 <option value="" disabled>Select Priority</option>
                 <option value="High">High</option>
                 <option value="Medium">Medium</option>
                 <option value="Low">Low</option>
               </select>
+
               <select name="issue_status" value={newIssue.issue_status} onChange={handleInputChange} className="w-full p-2 border rounded-md">
                 <option value="" disabled>Select Status</option>
                 <option value="Open">Open</option>
                 <option value="Resolved">Resolved</option>
                 <option value="Closed">Closed</option>
               </select>
+
               <Input name="issue_attachment" placeholder="Issue Attachment" value={newIssue.issue_attachments} onChange={handleInputChange} />
+
               <div className="flex gap-4">
                 <Button type="submit" className="flex-1">{isEditing ? "Update Issue" : "Create Issue"}</Button>
                 <button onClick={() => setIsDialogOpen(false)} className="px-4 py-2 bg-red-500 text-white rounded h-10 text-sm">Close</button>

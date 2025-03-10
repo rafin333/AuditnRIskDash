@@ -41,7 +41,7 @@ const RiskManagement = () => {
         risk_status: ''
     });
 
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M4MDczZGNjYmRlYzA0ODgyNDc3YmEiLCJlbWFpbCI6InJhZmluQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImFjbCI6WyJyaXNrLCBtaXRpZ2F0aW9uLCByZXBvcnQsIGxvZ2dpbmciXSwiaWF0IjoxNzQxMTYyMzczLCJleHAiOjE3NDEyNDg3NzN9.pv6nCTrBskeXbWzdg6rpZpqOjd7YvHGMFJvY-wRxY2g";
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M4MDczZGNjYmRlYzA0ODgyNDc3YmEiLCJlbWFpbCI6InJhZmluQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImFjbCI6WyJyaXNrLCBtaXRpZ2F0aW9uLCByZXBvcnQsIGxvZ2dpbmciXSwiaWF0IjoxNzQxNTkwMTU5LCJleHAiOjE3NDE2NzY1NTl9.Gd0pMRZ9RS9Xrrz_9SzrzoWyhBXLFmgGD4xgOuVXSLY";
 
     useEffect(() => {
         fetchIssues();
@@ -243,31 +243,66 @@ const RiskManagement = () => {
                                     />
                                 </div>
                                 <div>
-                                    <Input
+                                    <select
                                         name="risk_type"
-                                        placeholder="Risk Type"
                                         value={newRisk.risk_type}
                                         onChange={handleInputChange}
                                         required
-                                    />
+                                        className="w-full p-2 border rounded-md"
+                                    >
+                                        <option value="" disabled defaultValue className="text-gray-400">Select Risk Type</option>
+                                        <option value="Market Risk">Market Risk</option>
+                                        <option value="Credit Risk">Credit Risk</option>
+                                        <option value="Operational Risk">Operational Risk</option>
+                                        <option value="Operational Risk">Operational Risk</option>
+                                        <option value="Financial Risk">Financial Risk</option>
+                                        <option value="Strategic Risk">Strategic Risk</option>
+                                        <option value="Technology Risk">Technology Risk</option>
+                                    </select>
                                 </div>
                                 <div>
-                                    <Input
+                                    {/* <Input
                                         name="probability"
                                         placeholder="Probability"
                                         value={newRisk.probability}
                                         onChange={handleInputChange}
                                         required
-                                    />
+                                    /> */}
+                                    <select
+                                        name="probability"
+                                        value={newRisk.probability}
+                                        onChange={handleInputChange}
+                                        required
+                                        className="w-full p-2 border rounded-md"
+                                    >
+                                        <option value="" disabled defaultValue className="text-gray-400">Select Probability</option>
+                                        <option value="High">High</option>
+                                        <option value="Medium">Medium</option>
+                                        <option value="Low">Low</option>
+                                    </select>
                                 </div>
                                 <div>
-                                    <Input
+                                    {/* <Input
                                         name="impact"
                                         placeholder="Impact"
                                         value={newRisk.impact}
                                         onChange={handleInputChange}
                                         required
-                                    />
+                                    /> */}
+                                    <select
+                                        name="impact"
+                                        value={newRisk.impact}
+                                        onChange={handleInputChange}
+                                        required
+                                        className="w-full p-2 border rounded-md"
+                                    >
+                                        <option value="" disabled defaultValue className="text-gray-400">Select Impact</option>
+                                        <option value="Financial Loss">Financial Loss</option>
+                                        <option value="Operational Disruption">Operational Disruption</option>
+                                        <option value="Customer Dissatisfaction">Customer Dissatisfaction</option>
+                                        <option value="Reputation Damage">Reputation Damage</option>
+                                        <option value="Legal Liability">Legal Liability</option>
+                                    </select>
                                 </div>
                                 <div>
                                     <select
@@ -301,7 +336,7 @@ const RiskManagement = () => {
                                 </div>
 
                                 <div className="flex gap-4">
-                                <Button type="submit" className="flex-1">{isEditing ? "Update Risk" : "Create Risk"}</Button>
+                                    <Button type="submit" className="flex-1">{isEditing ? "Update Risk" : "Create Risk"}</Button>
                                     <button
                                         onClick={() => setIsDialogOpen(false)}
                                         className="px-4 py-2 bg-red-500 text-white rounded h-10 text-sm"

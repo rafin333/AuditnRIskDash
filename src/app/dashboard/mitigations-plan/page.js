@@ -35,10 +35,10 @@ const MitigationPlan = () => {
         timeline: '',
         resources: '',
         status: '',
-        userId: '67c8073dccbdec04882477ba' // Hardcoded from the token's user ID
+        userId: '67c8073dccbdec04882477ba'
     });
 
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M4MDczZGNjYmRlYzA0ODgyNDc3YmEiLCJlbWFpbCI6InJhZmluQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImFjbCI6WyJyaXNrLCBtaXRpZ2F0aW9uLCByZXBvcnQsIGxvZ2dpbmciXSwiaWF0IjoxNzQxMTYyMzczLCJleHAiOjE3NDEyNDg3NzN9.pv6nCTrBskeXbWzdg6rpZpqOjd7YvHGMFJvY-wRxY2g";
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M4MDczZGNjYmRlYzA0ODgyNDc3YmEiLCJlbWFpbCI6InJhZmluQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImFjbCI6WyJyaXNrLCBtaXRpZ2F0aW9uLCByZXBvcnQsIGxvZ2dpbmciXSwiaWF0IjoxNzQxNTkwMTU5LCJleHAiOjE3NDE2NzY1NTl9.Gd0pMRZ9RS9Xrrz_9SzrzoWyhBXLFmgGD4xgOuVXSLY";
 
     useEffect(() => {
         fetchRisks();
@@ -139,8 +139,8 @@ const MitigationPlan = () => {
         try {
             const response = await fetch(`http://202.4.109.211:5050/api/mitigation/${selectedMitigationId}`, {
                 method: 'DELETE',
-                headers: { 
-                    'Authorization': `Bearer ${token}` 
+                headers: {
+                    'Authorization': `Bearer ${token}`
                 }
             });
 
@@ -178,8 +178,8 @@ const MitigationPlan = () => {
             <div className="p-8">
                 <div className="flex justify-between items-center mb-6">
                     <h1 className="text-2xl font-bold">Mitigation Plan</h1>
-                    <Button onClick={() => { 
-                        setIsDialogOpen(true); 
+                    <Button onClick={() => {
+                        setIsDialogOpen(true);
                         setIsEditing(false);
                         setNewMitigation({
                             risk_id: '',
@@ -188,7 +188,7 @@ const MitigationPlan = () => {
                             resources: '',
                             status: '',
                             userId: '67c8073dccbdec04882477ba'
-                        }); 
+                        });
                     }}>
                         Add Mitigation
                     </Button>
@@ -250,9 +250,9 @@ const MitigationPlan = () => {
                                 <Button type="submit" className="flex-1">
                                     {isEditing ? "Update Mitigation" : "Create Mitigation"}
                                 </Button>
-                                <Button 
+                                <Button
                                     type="button"
-                                    onClick={() => setIsDialogOpen(false)} 
+                                    onClick={() => setIsDialogOpen(false)}
                                     variant="destructive"
                                 >
                                     Close
@@ -272,15 +272,27 @@ const MitigationPlan = () => {
                             <p>Are you sure you want to delete this mitigation? This action cannot be undone.</p>
                         </DialogBody>
                         <DialogFooter className="flex justify-end gap-4">
-                            <Button 
-                                variant="outline"
+                             <Button
                                 onClick={() => setIsDeleteDialogOpen(false)}
+                                style={{
+                                    backgroundColor: '#f3f4f6',
+                                    color: 'black',
+                                    transition: 'background-color 0.3s ease'
+                                }}
+                                onMouseEnter={(e) => e.target.style.backgroundColor = '#48bb78'}
+                                onMouseLeave={(e) => e.target.style.backgroundColor = '#f3f4f6'}
                             >
                                 Cancel
                             </Button>
-                            <Button 
-                                variant="destructive"
+                            <Button
                                 onClick={handleDeleteConfirm}
+                                style={{
+                                    backgroundColor: '#f3f4f6',
+                                    color: 'black',
+                                    transition: 'background-color 0.3s ease'
+                                }}
+                                onMouseEnter={(e) => e.target.style.backgroundColor = '#e53e3e'}
+                                onMouseLeave={(e) => e.target.style.backgroundColor = '#f3f4f6'}
                             >
                                 Delete
                             </Button>
@@ -315,14 +327,14 @@ const MitigationPlan = () => {
                                     </TableCell>
                                     <TableCell>
                                         <div className="flex gap-2">
-                                            <button 
-                                                onClick={() => handleEdit(mitigation)} 
+                                            <button
+                                                onClick={() => handleEdit(mitigation)}
                                                 aria-label="Edit"
                                             >
                                                 <PencilSquareIcon className="h-5 w-5 text-gray-600" />
                                             </button>
-                                            <button 
-                                                onClick={() => handleDeleteClick(mitigation._id)} 
+                                            <button
+                                                onClick={() => handleDeleteClick(mitigation._id)}
                                                 aria-label="Delete"
                                             >
                                                 <TrashIcon className="h-5 w-5 text-black" />
