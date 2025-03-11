@@ -1,5 +1,5 @@
 'use client';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import DashboardLayout from '@/components/layout/DashboardLayout';
 import DataTable from '@/components/ui/DataTable';
@@ -54,9 +54,6 @@ const charts = [
 ];
 
 const riskData = [
-  // { name: 'Low Risk', value: 10, color: '#34D399' },
-  // { name: 'Medium Risk', value: 7, color: '#FACC15' },
-  // { name: 'High Risk', value: 3, color: '#EF4444' },
   { name: 'Low Risk', value: 10, color: '#10B981' },
   { name: 'Medium Risk', value: 6, color: '#FACC15' },
   { name: 'High Risk', value: 4, color: '#EF4444' },
@@ -67,52 +64,6 @@ const mitigationData = [
   { name: 'In Progress', count: 8, color: '#F59E0B' },
   { name: 'Completed', count: 12, color: '#F59E0B' },
 ];
-
-// const data = [
-//   { x: 1, y: 5, z: 1, risk: "Low" },
-//   { x: 2, y: 5, z: 2, risk: "Low Medium" },
-//   { x: 3, y: 5, z: 3, risk: "Medium" },
-//   { x: 4, y: 5, z: 4, risk: "High Medium" },
-//   { x: 5, y: 5, z: 5, risk: "High" },
-//   { x: 6, y: 5, z: 6, risk: "Very High" },
-
-//   { x: 1, y: 4, z: 1, risk: "Low" },
-//   { x: 2, y: 4, z: 2, risk: "Low Medium" },
-//   { x: 3, y: 4, z: 3, risk: "Medium" },
-//   { x: 4, y: 4, z: 4, risk: "High Medium" },
-//   { x: 5, y: 4, z: 5, risk: "High" },
-//   { x: 6, y: 4, z: 6, risk: "Very High" },
-
-//   { x: 1, y: 3, z: 1, risk: "Low" },
-//   { x: 2, y: 3, z: 2, risk: "Low Medium" },
-//   { x: 3, y: 3, z: 3, risk: "Medium" },
-//   { x: 4, y: 3, z: 4, risk: "High Medium" },
-//   { x: 5, y: 3, z: 5, risk: "High" },
-//   { x: 6, y: 3, z: 6, risk: "Very High" },
-
-//   { x: 1, y: 2, z: 1, risk: "Low" },
-//   { x: 2, y: 2, z: 2, risk: "Low Medium" },
-//   { x: 3, y: 2, z: 3, risk: "Medium" },
-//   { x: 4, y: 2, z: 4, risk: "High Medium" },
-//   { x: 5, y: 2, z: 5, risk: "High" },
-//   { x: 6, y: 2, z: 6, risk: "Very High" },
-
-//   { x: 1, y: 1, z: 1, risk: "Low" },
-//   { x: 2, y: 1, z: 2, risk: "Low Medium" },
-//   { x: 3, y: 1, z: 3, risk: "Medium" },
-//   { x: 4, y: 1, z: 4, risk: "High Medium" },
-//   { x: 5, y: 1, z: 5, risk: "High" },
-//   { x: 6, y: 1, z: 6, risk: "Very High" },
-// ];
-
-// const colors = {
-//   "Low": "#2ca02c",
-//   "Low Medium": "#98df8a",
-//   "Medium": "#ffbb78",
-//   "High Medium": "#ff7f0e",
-//   "High": "#d62728",
-//   "Very High": "#8c001a"
-// };
 
 const heatData = [
   { probability: "High", severity: "Low", risks: "", color: "bg-green-500" },
@@ -153,7 +104,7 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(false);
   const [auditData, setAuditData] = useState([]);
 
-  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M4MDczZGNjYmRlYzA0ODgyNDc3YmEiLCJlbWFpbCI6InJhZmluQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImFjbCI6WyJyaXNrLCBtaXRpZ2F0aW9uLCByZXBvcnQsIGxvZ2dpbmciXSwiaWF0IjoxNzQxNTkwMTU5LCJleHAiOjE3NDE2NzY1NTl9.Gd0pMRZ9RS9Xrrz_9SzrzoWyhBXLFmgGD4xgOuVXSLY';
+  const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M4MDczZGNjYmRlYzA0ODgyNDc3YmEiLCJlbWFpbCI6InJhZmluQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImFjbCI6WyJyaXNrLCBtaXRpZ2F0aW9uLCByZXBvcnQsIGxvZ2dpbmciXSwiaWF0IjoxNzQxNjgyNTQ1LCJleHAiOjE3NDE3Njg5NDV9.lb72FfOC4yBh6Pl82OBwDfxaW65_QMpJ69z2l7llGys';
 
 
   useEffect(() => {
@@ -332,8 +283,8 @@ export default function Dashboard() {
               <div className="bg-gray-200 p-3 font-bold text-center border border-gray-400">High</div>
 
 
-              {["High", "Next 2 years", "Next 3 years", "Next 4 years", "Next 5 years", "Less than 10 years"].map((prob) => (
-                <>
+              {["High", "Next 2 years", "Next 3 years", "Next 4 years", "Next 5 years", "Less than 10 years"].map((prob, index) => (
+                <React.Fragment key={prob}>  
                   <div className="bg-gray-200 p-3 font-bold text-center border border-gray-400">{prob}</div>
                   {["Low", "Low Medium", "Medium", "High Medium", "High"].map((sev) => {
                     const cell = heatData.find((r) => r.probability === prob && r.severity === sev);
@@ -346,8 +297,9 @@ export default function Dashboard() {
                       </div>
                     );
                   })}
-                </>
+                </React.Fragment>
               ))}
+
             </div>
           </div>
         </div>

@@ -38,7 +38,7 @@ const MitigationPlan = () => {
         userId: '67c8073dccbdec04882477ba'
     });
 
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M4MDczZGNjYmRlYzA0ODgyNDc3YmEiLCJlbWFpbCI6InJhZmluQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImFjbCI6WyJyaXNrLCBtaXRpZ2F0aW9uLCByZXBvcnQsIGxvZ2dpbmciXSwiaWF0IjoxNzQxNTkwMTU5LCJleHAiOjE3NDE2NzY1NTl9.Gd0pMRZ9RS9Xrrz_9SzrzoWyhBXLFmgGD4xgOuVXSLY";
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M4MDczZGNjYmRlYzA0ODgyNDc3YmEiLCJlbWFpbCI6InJhZmluQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImFjbCI6WyJyaXNrLCBtaXRpZ2F0aW9uLCByZXBvcnQsIGxvZ2dpbmciXSwiaWF0IjoxNzQxNjgyNTQ1LCJleHAiOjE3NDE3Njg5NDV9.lb72FfOC4yBh6Pl82OBwDfxaW65_QMpJ69z2l7llGys";
 
     useEffect(() => {
         fetchRisks();
