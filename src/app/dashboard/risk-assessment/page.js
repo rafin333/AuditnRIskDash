@@ -41,7 +41,7 @@ const RiskManagement = () => {
         risk_status: ''
     });
 
-    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M4MDczZGNjYmRlYzA0ODgyNDc3YmEiLCJlbWFpbCI6InJhZmluQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImFjbCI6WyJyaXNrLCBtaXRpZ2F0aW9uLCByZXBvcnQsIGxvZ2dpbmciXSwiaWF0IjoxNzQxNjgyNTQ1LCJleHAiOjE3NDE3Njg5NDV9.lb72FfOC4yBh6Pl82OBwDfxaW65_QMpJ69z2l7llGys";
+    const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M4MDczZGNjYmRlYzA0ODgyNDc3YmEiLCJlbWFpbCI6InJhZmluQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImFjbCI6WyJyaXNrLCBtaXRpZ2F0aW9uLCByZXBvcnQsIGxvZ2dpbmciXSwiaWF0IjoxNzQxNzYwMTY3LCJleHAiOjE3NDE4NDY1Njd9.-xL9_5dIMWsuxRhkpE3ZqfvstBqnq1DO1MBN73DQMMc";
 
     useEffect(() => {
         fetchIssues();
@@ -253,7 +253,6 @@ const RiskManagement = () => {
                                         <option value="" disabled defaultValue className="text-gray-400">Select Risk Type</option>
                                         <option value="Market Risk">Market Risk</option>
                                         <option value="Credit Risk">Credit Risk</option>
-                                        <option value="Operational Risk">Operational Risk</option>
                                         <option value="Operational Risk">Operational Risk</option>
                                         <option value="Financial Risk">Financial Risk</option>
                                         <option value="Strategic Risk">Strategic Risk</option>
