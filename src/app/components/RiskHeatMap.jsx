@@ -20,7 +20,7 @@ const RiskHeatmap = () => {
   useEffect(() => {
     const fetchRiskData = async () => {
       try {
-        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M4MDczZGNjYmRlYzA0ODgyNDc3YmEiLCJlbWFpbCI6InJhZmluQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImFjbCI6WyJyaXNrLCBtaXRpZ2F0aW9uLCByZXBvcnQsIGxvZ2dpbmciXSwiaWF0IjoxNzQxNzYwMTY3LCJleHAiOjE3NDE4NDY1Njd9.-xL9_5dIMWsuxRhkpE3ZqfvstBqnq1DO1MBN73DQMMc';
+        const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2N2M4MDczZGNjYmRlYzA0ODgyNDc3YmEiLCJlbWFpbCI6InJhZmluQGdtYWlsLmNvbSIsInJvbGUiOiJhZG1pbiIsImFjbCI6WyJyaXNrLCBtaXRpZ2F0aW9uLCByZXBvcnQsIGxvZ2dpbmciXSwiaWF0IjoxNzQxODQyNjU3LCJleHAiOjE3NDE5MjkwNTd9.XeAn1PlkOyu8MVB3WUkUvjveB66DxpvbPer_S-m5Vt0';
         
         const response = await fetch('http://202.4.109.211:5050/api/risk', {
           headers: {
